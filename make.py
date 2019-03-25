@@ -57,6 +57,7 @@ def build():
 
   wasm = 'wasm' in sys.argv
   closure = 'closure' in sys.argv
+  extras = 'extras' in sys.argv
 
   args = '-O3 --llvm-lto 1 -s NO_EXIT_RUNTIME=1 -s NO_FILESYSTEM=1 -s EXPORTED_RUNTIME_METHODS=["Pointer_stringify"]'
   if not wasm:
@@ -134,17 +135,17 @@ def build():
     emscripten.Building.emcc('glue.cpp', args, 'glue.bc')
     assert(os.path.exists('glue.bc'))
 
-    # Configure with CMake on Windows, and with configure on Unix.
-    cmake_build = emscripten.WINDOWS
+    # Prefer CMake on Windows, and configure on Unix -- but ./configure doesn't know how to build the extras yet.
+    cmake_build = emscripten.WINDOWS or extras
 
     if cmake_build:
       if not os.path.exists('CMakeCache.txt'):
         stage('Configure via CMake')
-        emscripten.Building.configure([emscripten.PYTHON, os.path.join(EMSCRIPTEN_ROOT, 'emcmake'), 'cmake', '..', '-DBUILD_DEMOS=OFF', '-DBUILD_EXTRAS=OFF', '-DBUILD_CPU_DEMOS=OFF', '-DUSE_GLUT=OFF', '-DCMAKE_BUILD_TYPE=Release'])
+        emscripten.Building.configure([emscripten.PYTHON, os.path.join(EMSCRIPTEN_ROOT, 'emcmake'), 'cmake', '..', '-DBUILD_DEMOS=OFF', '-DBUILD_EXTRAS=%s' % ("ON" if extras else "OFF"), '-DBUILD_CPU_DEMOS=OFF', '-DUSE_GLUT=OFF', '-DCMAKE_BUILD_TYPE=Release'])
     else:
       if not os.path.exists('config.h'):
         stage('Configure (if this fails, run autogen.sh in bullet/ first)')
-        emscripten.Building.configure(['../configure', '--disable-demos','--disable-dependency-tracking'])
+        emscripten.Building.configure(['../configure', '--disable-demos', '--disable-extras', '--disable-dependency-tracking'])
 
     stage('Make')
 
@@ -192,4 +193,3 @@ def build():
 
 if __name__ == '__main__':
   build()
-
