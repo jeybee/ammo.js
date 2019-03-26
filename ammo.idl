@@ -606,7 +606,7 @@ interface btHingeConstraint {
   void setLimit(float low, float high, float softness, float biasFactor, optional float relaxationFactor);
   void enableAngularMotor(boolean enableMotor, float targetVelocity, float maxMotorImpulse);
   void setAngularOnly(boolean angularOnly);
-  
+
   void enableMotor(boolean enableMotor);
   void setMaxMotorImpulse(float maxMotorImpulse);
   //void setMotorTarget([Const,Ref] btQuaternion qAinB, float dt);
@@ -879,7 +879,7 @@ interface Node {
   [Value] attribute btVector3 m_v;
   [Value] attribute btVector3 m_f;
   [Value] attribute btVector3 m_n;
-  attribute float m_im;	
+  attribute float m_im;
   attribute float m_area;
 };
 
@@ -958,7 +958,7 @@ interface btSoftBody {
   [Value] attribute Config m_cfg;
   [Value] attribute tNodeArray m_nodes;
   [Value] attribute tMaterialArray m_materials;
-  [Value] attribute tAnchorArray m_anchors; 
+  [Value] attribute tAnchorArray m_anchors;
 
   [Const] boolean checkLink( long node0, long node1);
   [Const] boolean checkFace( long node0, long node1, long node2);
