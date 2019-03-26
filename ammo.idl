@@ -1044,6 +1044,13 @@ interface Vec3Real {
 [Prefix="HACD::"]
 interface HACD {
   void HACD();
+
+  void SetCompacityWeight(double alpha);
+  void SetVolumeWeight(double beta);
+  void SetConcavity(double concavity);
+  void SetNClusters(long nClusters);
+  void SetNVerticesPerCH(long nVerticesPerCH);
+
   void SetPoints(Vec3Real points);
   void SetNPoints(long nPoints);
   void SetTriangles(Vec3Long triangles);
