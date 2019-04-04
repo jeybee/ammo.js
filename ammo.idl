@@ -450,6 +450,7 @@ interface btOverlappingPairCallback {
 
 interface btOverlappingPairCache {
   void setInternalGhostPairCallback(btOverlappingPairCallback ghostPairCallback);
+  void removeOverlappingPairsContainingProxy(btBroadphaseProxy proxy, btDispatcher dispatcher);
 };
 
 interface btAxisSweep3 {
@@ -464,6 +465,7 @@ interface btCollisionConfiguration {
 
 interface btDbvtBroadphase {
   void btDbvtBroadphase();
+  btOverlappingPairCache getOverlappingPairCache();
 };
 
 interface btBroadphaseProxy {
@@ -658,6 +660,7 @@ interface btCollisionWorld {
   void convexSweepTest([Const] btConvexShape castShape, [Const, Ref] btTransform from, [Const, Ref] btTransform to, [Ref] ConvexResultCallback resultCallback, float allowedCcdPenetration);
   void contactPairTest(btCollisionObject colObjA, btCollisionObject colObjB, [Ref] ContactResultCallback resultCallback);
   void contactTest(btCollisionObject colObj, [Ref] ContactResultCallback resultCallback);
+  void setForceUpdateAllAabbs(boolean forceUpdateAllAabbs);
   void updateSingleAabb(btCollisionObject colObj);
   void setDebugDrawer(btIDebugDraw debugDrawer);
   btIDebugDraw getDebugDrawer();
