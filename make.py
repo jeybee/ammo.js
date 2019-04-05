@@ -58,7 +58,7 @@ def build():
   wasm = 'wasm' in sys.argv
   closure = 'closure' in sys.argv
 
-  args = '-O3 --llvm-lto 1 -s NO_EXIT_RUNTIME=1 -s NO_FILESYSTEM=1 -s EXPORTED_RUNTIME_METHODS=["UTF8ToString"]'
+  args = '-O3 --llvm-lto 1 -s ENVIRONMENT=web -s NO_EXIT_RUNTIME=1 -s NO_FILESYSTEM=1 -s EXPORTED_RUNTIME_METHODS=["UTF8ToString"]'
   if not wasm:
     args += ' -s WASM=0 -s AGGRESSIVE_VARIABLE_ELIMINATION=1 -s ELIMINATE_DUPLICATE_FUNCTIONS=1 -s SINGLE_FILE=1 -s LEGACY_VM_SUPPORT=1'
   else:
@@ -192,4 +192,3 @@ def build():
 
 if __name__ == '__main__':
   build()
-
