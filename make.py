@@ -20,6 +20,11 @@ os.path.join('BulletSoftBody', 'btSoftBodyHelpers.h'),
 
 os.path.join('HACD', 'hacdHACD.h'),
 
+os.path.join('VHACD', 'public', 'VHACD.h'),
+os.path.join('VHACD', 'inc', 'vhacdTimer.h'),
+'sstream',
+os.path.join('VHACD', 'inc', 'vhacdVHACD.h'),
+
 os.path.join('..', '..', 'idl_templates.h')]
 
 # Startup
@@ -164,13 +169,15 @@ def build():
                      os.path.join('src', 'BulletDynamics', 'libBulletDynamics.a'),
                      os.path.join('src', 'BulletCollision', 'libBulletCollision.a'),
                      os.path.join('src', 'LinearMath', 'libLinearMath.a'),
-                     os.path.join('Extras', 'HACD', 'libHACD.a')]
+                     os.path.join('Extras', 'HACD', 'libHACD.a'),
+                     os.path.join('Extras', 'VHACD', 'libVHACD.a')]
     else:
       bullet_libs = [os.path.join('src', '.libs', 'libBulletSoftBody.a'),
                      os.path.join('src', '.libs', 'libBulletDynamics.a'),
                      os.path.join('src', '.libs', 'libBulletCollision.a'),
                      os.path.join('src', '.libs', 'libLinearMath.a'),
-                     os.path.join('Extras', '.libs', 'libHACD.a')]
+                     os.path.join('Extras', '.libs', 'libHACD.a'),
+                     os.path.join('Extras', '.libs', 'libVHACD.a')]
 
     emscripten.Building.link(['glue.bc'] + bullet_libs, 'libbullet.bc')
     assert os.path.exists('libbullet.bc')
