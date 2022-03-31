@@ -11,7 +11,7 @@ set(AMMO_HEADER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/ammo.h)
 set(AMMO_IDL_FILE ${CMAKE_CURRENT_SOURCE_DIR}/ammo.idl)
 set(AMMO_ONLOAD_FILE ${CMAKE_CURRENT_SOURCE_DIR}/onload.js)
 set(BULLET_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bullet/src/)
-
+set(BULLET_EXTRAS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bullet/Extras/)/
 
 set(BULLET_TARGETS BulletCollision BulletDynamics BulletSoftBody LinearMath)
 foreach(_TARGET ${BULLET_TARGETS})
@@ -23,6 +23,9 @@ set(USE_GRAPHICAL_BENCHMARK OFF)
 
 # Disable bullet GLUT
 set(USE_GLUT OFF)
+
+# Enable Extras building
+set(BUILD_EXTRAS ON)
 
 # Build Release by default
 set(CMAKE_BUILD_TYPE Release CACHE STRING "Build Type")
@@ -75,6 +78,7 @@ set(EMCC_WASM_ARGS ${EMCC_ARGS}
 set(EMCC_GLUE_ARGS
   -c
   -I${BULLET_SRC_DIR}
+  -I${BULLET_EXTRAS_DIR}
   -include${AMMO_HEADER_FILE})
 
 
