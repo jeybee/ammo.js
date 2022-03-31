@@ -11,9 +11,9 @@ set(AMMO_HEADER_FILE ${CMAKE_CURRENT_SOURCE_DIR}/ammo.h)
 set(AMMO_IDL_FILE ${CMAKE_CURRENT_SOURCE_DIR}/ammo.idl)
 set(AMMO_ONLOAD_FILE ${CMAKE_CURRENT_SOURCE_DIR}/onload.js)
 set(BULLET_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bullet/src/)
-set(BULLET_EXTRAS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bullet/Extras/)/
+set(BULLET_EXTRAS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bullet/Extras/)
 
-set(BULLET_TARGETS BulletCollision BulletDynamics BulletSoftBody LinearMath)
+set(BULLET_TARGETS BulletCollision BulletDynamics BulletSoftBody LinearMath HACD VHACD)
 foreach(_TARGET ${BULLET_TARGETS})
   list(APPEND BULLET_LIBS $<TARGET_FILE:${_TARGET}>)
 endforeach()
@@ -35,6 +35,8 @@ set(TOTAL_MEMORY 67108864 CACHE STRING "Total Memory")
 
 # Enable for resizable heap, with some amount of slowness
 set(ALLOW_MEMORY_GROWTH 0 CACHE STRING "Allow Memory Growth")
+
+set(EMCC_DEBUG 1)
 
 set(EMCC_ARGS
   --extern-pre-js ${AMMO_FRONT_MATTER_FILE}

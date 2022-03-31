@@ -1263,6 +1263,8 @@ interface btSoftBodyHelpers {
   btSoftBody CreateEllipsoid([Ref] btSoftBodyWorldInfo worldInfo, [Const, Ref] btVector3 center, [Const, Ref] btVector3 radius, long res);
   btSoftBody CreateFromTriMesh([Ref] btSoftBodyWorldInfo worldInfo, float[] vertices, long[] triangles, long ntriangles, boolean randomizeConstraints);
   btSoftBody CreateFromConvexHull([Ref] btSoftBodyWorldInfo worldInfo, [Const] btVector3 vertices, long nvertices, boolean randomizeConstraints);
+};
+
 // extras
 
 interface Vec3Long {
