@@ -1306,7 +1306,7 @@ interface HACD {
 [Prefix="VHACD::"]
 interface VHACD {
   void VHACD();
-  boolean Compute(double[] points, long stridePoints, long nPoints, long[] triangles, long strideTriangles, long nTriangles, [Const, Ref]Parameters params);
+  boolean Compute(float[] points, long stridePoints, long nPoints, long[] triangles, long strideTriangles, long nTriangles, [Const, Ref]Parameters params);
   unsigned short GetNConvexHulls();
   void GetConvexHull(unsigned short index, [Ref]ConvexHull ch);
   void Cancel();
