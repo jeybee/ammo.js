@@ -13,7 +13,7 @@ set(AMMO_ONLOAD_FILE ${CMAKE_CURRENT_SOURCE_DIR}/onload.js)
 set(BULLET_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bullet/src/)
 set(BULLET_EXTRAS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bullet/Extras/)
 
-set(BULLET_TARGETS BulletCollision BulletDynamics BulletSoftBody LinearMath HACD VHACD)
+set(BULLET_TARGETS BulletCollision BulletDynamics LinearMath HACD)
 foreach(_TARGET ${BULLET_TARGETS})
   list(APPEND BULLET_LIBS $<TARGET_FILE:${_TARGET}>)
 endforeach()
@@ -34,7 +34,7 @@ set(CMAKE_BUILD_TYPE Release CACHE STRING "Build Type")
 set(TOTAL_MEMORY 67108864 CACHE STRING "Total Memory")
 
 # Enable for resizable heap, with some amount of slowness
-set(ALLOW_MEMORY_GROWTH 0 CACHE STRING "Allow Memory Growth")
+set(ALLOW_MEMORY_GROWTH 1 CACHE STRING "Allow Memory Growth")
 
 set(EMCC_DEBUG 1)
 
@@ -44,6 +44,8 @@ set(EMCC_ARGS
   --post-js glue.js
   --post-js ${AMMO_ONLOAD_FILE}
   -O3
+#  -O0
+#  -g
   -s ALLOW_MEMORY_GROWTH=${ALLOW_MEMORY_GROWTH}
   -s ALLOW_TABLE_GROWTH=1
   -s EXPORTED_FUNCTIONS=_malloc,_free
@@ -74,6 +76,10 @@ set(EMCC_JS_ARGS ${EMCC_ARGS}
   -s WASM=0)
 
 set(EMCC_WASM_ARGS ${EMCC_ARGS}
+  -I${BULLET_SRC_DIR}
+  -I${BULLET_EXTRAS_DIR}
+  -include${AMMO_HEADER_FILE}
+#  -gseparate-dwarf
   -s BINARYEN_IGNORE_IMPLICIT_TRAPS=1
   -s WASM=1)
 
@@ -87,7 +93,6 @@ set(EMCC_GLUE_ARGS
 #######################################
 project("ammo")
 add_subdirectory(bullet EXCLUDE_FROM_ALL)
-
 
 #######################################
 add_custom_command(
@@ -120,7 +125,7 @@ add_custom_target(ammo-javascript ALL DEPENDS ammo.js)
 add_custom_command(
   OUTPUT ammo.wasm.js ammo.wasm.wasm
   COMMAND emcc glue.o ${BULLET_LIBS} ${EMCC_WASM_ARGS} -o ammo.wasm.js
-  DEPENDS ammo-bindings ${AMMO_FRONT_MATTER_FILE} ${AMMO_ONLOAD_FILE} ${BULLET_TARGETS}
+  DEPENDS glue.o ${AMMO_HEADER_FILE} ammo-bindings ${AMMO_FRONT_MATTER_FILE} ${AMMO_ONLOAD_FILE} ${BULLET_TARGETS}
   COMMENT "Building ammo webassembly"
   VERBATIM)
 add_custom_target(ammo-wasm ALL DEPENDS ammo.wasm.js ammo.wasm.wasm)

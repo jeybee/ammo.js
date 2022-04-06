@@ -13,10 +13,7 @@
 #include "BulletCollision/Gimpact/btGImpactShape.h"
 
 #include "HACD/hacdHACD.h"
-#include "VHACD/public/VHACD.h"
-#include "VHACD/inc/vhacdTimer.h"
 #include <sstream>
-#include "VHACD/inc/vhacdVHACD.h"
 
 //Web IDL doesn't seem to support C++ templates so this is the best we can do
 //https://stackoverflow.com/questions/42517010/is-there-a-way-to-create-webidl-bindings-for-c-templated-types#comment82966925_42517010
@@ -29,3 +26,4 @@ typedef btAlignedObjectArray<btScalar> btScalarArray;
 
 typedef HACD::Vec3<HACD::Real> Vec3Real;
 typedef HACD::Vec3<long> Vec3Long;
+
